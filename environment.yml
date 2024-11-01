@@ -23,6 +23,9 @@ dependencies:
   - punx
   - pysumreg
   - spec2nexus
+  - suitcase-jsonl
+  - suitcase-mongo
+  - suitcase-msgpack
 
   # rely on pip to install tiled and its dependencies
   - pip  # _install_ pip
