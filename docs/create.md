@@ -2,6 +2,9 @@
 
 There are a few steps to create a `tiled` server for bluesky data.
 
+Jan Ilavsky has created an [article](https://github.com/jilavsky/SAXS_IgorCode/wiki/Reading-data-from-Tiled-server)
+about reading data from such a server.
+
 CONTENTS
 
 - [Guide to Creating a `tiled` Server](#guide-to-creating-a-tiled-server)
@@ -17,6 +20,12 @@ CONTENTS
   - [Clients](#clients)
 
 ## Download the template
+
+The download steps must be done on a workstation that can reach the public
+network.  Use the same account that will be used to run the tiled server.
+
+The tiled server should run on a workstation that has access to the controls
+subnet and any relevant filesystems with data to be served.
 
 ```bash
 cd your/projects/directory
@@ -64,9 +73,18 @@ Keep in mind, YAML, like Python uses indentation as syntax.
 
 Edit `config.yml` for your databroker catalog information:
 
-- `path`: name of this catalog (use this name from your bluesky sessions)
-- `uri` : address of your MongoDB catalog
+- `path`: name of this catalog (use this name from your bluesky sessions); can be found in:
+  - `bluesky/instrument/iconfig.yml`
+  - catalog name is at the end of line ~8: `DATABROKER_CATALOG: &databroker_catalog some_catalog_name`
+- `uri` : address of your MongoDB catalog; in `mongodb://DB_SERVER.xray.aps.anl.gov:27017/45id_instrument-bluesky` replace:
+  - `DB_SERVER` with `db_host_name` (can be found in 2nd column of [APS list table](https://github.com/BCDA-APS/bluesky_training/wiki))
+  - `45id_instrument` with `catalog_name`
+- In line 4 `http://SERVER.xray.aps.anl.gov:8020/`:
+  - replace `SERVER` with the host name (computer running the tiled server)
+  - make sure the port number is consistent with the `./start-tiled.sh` script
 
+WARNING: consider whether you want this information publicly available or not (i.e. host tiled repo on aps gitlab or github)
+  
 Repeat this block if you have more than one catalog to be served (such as
 retired catalogs).  A comment section of the template shows how to add addtional
 catalogs.
