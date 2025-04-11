@@ -151,3 +151,5 @@ config.yml
 *.db
 *.sql
 *.pid
+
+.nfs*
