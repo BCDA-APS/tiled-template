@@ -20,20 +20,24 @@ def tiled_test():
     print(f"{cat=}")
 
 
+def read_intake_yaml(file) -> dict:
+    with open(file) as f:
+        db_cfg = yaml.load(f, Loader=yaml.Loader)
+        return db_cfg["sources"]
+
+
 def main():
     home = pathlib.Path.home()
     # print(f"{home=}")
     databroker_configs = home / ".local" / "share" / "intake"
     # print(f"exists:{databroker_configs.exists()}  {databroker_configs}")
 
-    master = {}
-    for intake_yml in databroker_configs.iterdir():
-        if intake_yml.is_file() and intake_yml.suffix == ".yml":
-            # print(f"{item.suffix=}  {item=}")
-            with open(intake_yml) as f:
-                db_cfg = yaml.load(f, Loader=yaml.Loader)
-                master.update(**db_cfg["sources"])
-    # print(f"{len(master)}  {list(master.keys())}")
+    master = {
+        k: v
+        for intake_yml in databroker_configs.iterdir()
+        if intake_yml.is_file() and intake_yml.suffix == ".yml"
+        for k, v in read_intake_yaml(intake_yml).items()
+    }
 
     local_config = pathlib.Path(__file__).parent / "config.yml"
     # print(f"exists:{local_config.exists()}  {local_config}")
@@ -53,7 +57,7 @@ def main():
                         args=dict(uri=uri),
                     )
                     new_entries.append(entry)
-    print(yaml.dump(new_entries))
+    print(yaml.dump(new_entries, indent=4))
 
 
 if __name__ == "__main__":
