@@ -1,6 +1,7 @@
 """Read the SPEC data file format."""
 
 import datetime
+import os
 
 import numpy
 from spec2nexus import spec
@@ -14,7 +15,17 @@ SPEC_FILE_SPECIFICATION = TiledSpec("SPEC_file", version="1.0")
 SPEC_SCAN_SPECIFICATION = TiledSpec("SPEC_scan", version="1.0")
 
 
+def has(parent, attr):
+    """Cautious alternative to hasattr()."""
+    if attr in dir(parent):
+        obj = getattr(parent, attr)
+        return obj is not None
+    return False
+
+
+
 def read_diffractometer_metadata(diffractometer):
+    # special cases
     simple_attrs = """
         UB
         geometry_name
@@ -28,12 +39,8 @@ def read_diffractometer_metadata(diffractometer):
     md = {
         k: getattr(diffractometer, k)
         for k in simple_attrs
-        if hasattr(diffractometer, k)
+        if has(diffractometer, k)
     }
-
-    # special cases
-    def has(parent, attr):
-        return hasattr(parent, attr) and len(getattr(parent, attr)) > 0
 
     if has(diffractometer, "reflections"):
         md["reflections"] = {
@@ -72,9 +79,9 @@ def read_spec_scan(scan):
         md = {
             k: getattr(scan, k)
             for k in attrs
-            if hasattr(scan, k)
+            if has(scan, k)
         }
-        if hasattr(scan, "diffractometer"):
+        if has(scan, "diffractometer"):
             md.update(read_diffractometer_metadata(scan.diffractometer))
         # fmt: on
     except ValueError as exc:
@@ -93,18 +100,18 @@ def read_spec_data(filename, **kwargs):
         specFile=str(sdf.specFile),
     )
     # header metadata  (sdf.headers is a list)
-    if hasattr(sdf, "headers") and len(sdf.headers) > 0:
+    if has(sdf, "headers") and len(sdf.headers) > 0:
         md["headers"] = {}
         for h, header in enumerate(sdf.headers, start=1):
             h_md = md["headers"][f"H{h}"] = {}
             for key in "date epoch counter_xref positioner_xref".split():
-                if hasattr(header, key):
+                if has(header, key):
                     h_md[key] = getattr(header, key)
-            if hasattr(header, "file"):
+            if has(header, "file"):
                 h_md["file"] = str(header.file)
-            if hasattr(header, "epoch"):
+            if has(header, "epoch"):
                 h_md["iso8601"] = f"{datetime.datetime.fromtimestamp(header.epoch)}"
-            if hasattr(header, "comments") and len(header.comments) > 0:
+            if has(header, "comments") and len(header.comments) > 0:
                 h_md["comments"] = {
                     f"C{c}": comment
                     for c, comment in enumerate(header.comments, start=1)
@@ -141,6 +148,8 @@ def developer():
     path = usaxs_data_path
     for filename in sorted(path.iterdir()):
         print(f"{filename.name=}")
+        if not os.path.isfile(filename):
+            continue
         try:
             structure = read_spec_data(filename)
             print(f"{structure}")

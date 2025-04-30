@@ -2,6 +2,7 @@
 Read a variety of image file formats as input for tiled.
 """
 
+import os
 import pathlib
 
 import numpy
@@ -11,6 +12,7 @@ from PIL.TiffImagePlugin import IFDRational
 from tiled.adapters.array import ArrayAdapter
 from tiled.adapters.mapping import MapAdapter
 from tiled.structures.core import Spec as TiledSpec
+
 from ignore_data import IGNORE_SPECIFICATION
 
 ROOT = pathlib.Path(__file__).parent
@@ -117,6 +119,8 @@ def image_metadata(image):
 def read_image(filename, **kwargs):
     fn = pathlib.Path(filename).name
     try:
+        if not os.path.isfile(filename):
+            raise TypeError(f"'{filename}' is not a file.")
         image = Image.open(filename)
         md = image_metadata(image)
 
