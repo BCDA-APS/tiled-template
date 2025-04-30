@@ -1,0 +1,286 @@
+# config.yml
+
+# tiled serve config --public --host 164.54.104.17 config.yml
+# http://otz.xray.aps.anl.gov:8000/
+
+# For security when using tiled server to write bluesky runs,
+# set the API key by setting env var
+# TILED_API_KEY rather than putting it in code.
+
+
+#object_cache:
+#  available_bytes: 1_000_000_000 # 2 GB of RAM
+
+trees:
+
+  - path: developer
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky3.xray.aps.anl.gov:27017/developer-bluesky
+
+  - path: 1bm
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/1bm-bluesky
+
+  - path: 1id_hexm_retired_2023-12-06
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/1id_hexm-bluesky
+
+  - path: 1ide
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/1ide-bluesky
+
+  - path: 2idd
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/2idd-bluesky
+
+  - path: 2idd_bnp
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/2idd_bnp-bluesky
+
+  - path: 2iddnx
+    args:
+      uri: mongodb://dbbluesky3.xray.aps.anl.gov:27017/2iddnx-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: 2idenx
+    args:
+      uri: mongodb://dbbluesky3.xray.aps.anl.gov:27017/2idenx-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: 3idb
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/3idb-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: 3idc
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/3idc-bluesky
+
+  - path: 4id_polar
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky4.xray.aps.anl.gov:27017/4id_polar-bluesky
+
+  - path: 6bma
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/6bma-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: 6idb
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/6idb-bluesky
+
+  - path: 6idd
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/6idd-bluesky
+
+  - path: 6idd-older
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/metadatastore-production-v1
+      # assets: mongodb://dbbluesky3.xray.aps.anl.gov:27017/filestore-production-v1
+
+  - path: 7idb
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky3.xray.aps.anl.gov:27017/7idb-bluesky
+
+  - path: 8idi_xpcs
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky3.xray.aps.anl.gov:27017/8idi_xpcs-bluesky
+
+  - path: 9bm
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/9bm-bluesky
+
+  - path: 11bmb
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/11bmb-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: 12ide
+    args:
+      uri: mongodb://dbbluesky3.xray.aps.anl.gov:27017/12ide-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: 17bm
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/17bm-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: 19id_isn
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/19id_isn-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: 25idc
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/25idc-bluesky
+
+  - path: 25idd
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/25idd-bluesky
+
+  - path: 25ide
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/25ide-bluesky
+
+  - path: 28idb
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/28idb-bluesky
+
+  - path: 29idd
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/29idd-bluesky
+
+  - path: 30id-herix
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/herix-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: 30id-nrs30
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/nrs30-bluesky
+
+  - path: 33idd
+    args:
+      uri: mongodb://dbbluesky3.xray.aps.anl.gov:27017/33idd-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: 34idc
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/34idc-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: bdp2022
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky4.xray.aps.anl.gov:27017/bdp2022-bluesky
+
+  - path: CSSItb-9ID-test-bed
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/CSSItb-bluesky
+    tree: databroker.mongo_normalized:Tree.from_uri
+
+  - path: depo_lab_mds_pcs
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/depo_lab-bluesky
+
+  - path: depo_lab_czp
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/depo_lab_czp-bluesky
+
+  - path: ht_hedm
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky3.xray.aps.anl.gov:27017/ht_hedm-bluesky
+
+  - path: hexm
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky3.xray.aps.anl.gov:27017/hexm-bluesky
+
+  - path: hexm_1id_retired_2023-12-06
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky3.xray.aps.anl.gov:27017/1id_hexm-bluesky
+
+  - path: ravioli
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/ravioli-bluesky
+
+  - path: spc_group
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky2.xray.aps.anl.gov:27017/spc_group-bluesky
+
+  - path: usaxs
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/usaxs-bluesky
+
+  - path: usaxs_9idc_retired_2022-08-10
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/9idc_usaxs-bluesky
+
+  - path: usaxs_20idb_retired_2023-12-05
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      uri: mongodb://dbbluesky1.xray.aps.anl.gov:27017/20idb_usaxs-bluesky
+
+
+  # - path: class_2021_03
+  #   args:
+  #     uri: mongodb://localhost:27017/class_2021_03-bluesky
+  #   tree: databroker.mongo_normalized:Tree.from_uri
+
+  # - path: training
+  #   args:
+  #     uri: mongodb://otz.xray.aps.anl.gov:27017/training-bluesky
+  #   tree: databroker.mongo_normalized:Tree.from_uri
+
+  # - path: training-logging
+  #   args:
+  #     uri: mongodb://wow.xray.aps.anl.gov:27017/training-logging
+  #   tree: databroker.mongo_normalized:Tree.from_uri
+
+  # - path: depo_lab_chulak
+  #   args:
+  #     uri: mongodb://164.54.101.100:27017/metadatastore-production-v1
+  #   tree: databroker.mongo_normalized:Tree.from_uri
+
+  # SPEC_file_examples  /home/beams/JEMIAN/Documents/projects/prjemian/spec2nexus/src/spec2nexus/data/
+  # image_file_examples /home/beams/JEMIAN/Documents/projects/Bluesky/hklpy/docs/source/examples/notebooks/resources/
+  # MDA_file_examples   /home/beams/JEMIAN/Documents/26id/
+  # MDA_file_examples   /home/beams/JEMIAN/Documents/mda/data
+  # MDA_file_examples   /home/beams/DOHNARMS/controls/data_progs/mda_files
+
+
+  - path: directory_sampler
+    tree: tiled.catalog:from_uri
+    args:
+      readable_storage:
+        - ./dev_sampler
+      uri: /local/dev_sampler.sql
+      adapters_by_mimetype:
+        application/json: ignore_data:read_ignore
+        application/octet-stream: ignore_data:read_ignore
+        application/x-mda: synApps_mda:read_mda
+        application/xop+xml: ignore_data:read_ignore
+        application/zip: ignore_data:read_ignore
+        image/avif: ignore_data:read_ignore
+        image/bmp: image_data:read_image
+        image/gif: image_data:read_image
+        image/jpeg: image_data:read_image
+        image/png: image_data:read_image
+        image/svg+xml: ignore_data:read_ignore
+        image/tiff: image_data:read_image
+        image/vnd.microsoft.icon: image_data:read_image
+        image/webp: image_data:read_image
+        image/x-ms-bmp: image_data:read_image
+        text/markdown: ignore_data:read_ignore
+        text/plain: ignore_data:read_ignore
+        text/x-python: ignore_data:read_ignore
+        text/x-spec_data: spec_data:read_spec_data
+        text/xml: ignore_data:read_ignore
