@@ -8,7 +8,6 @@ HOST=0.0.0.0  # access server by "localhost", hostname, or IP number
 # HOST="${HOSTNAME}"  # only access server by this exact name
 PORT=8020
 CONDA_ENV=tiled
-
 CONDA_BASE=$(readlink -f $(dirname ${CONDA_EXE})/.. )
 source "${CONDA_BASE}/etc/profile.d/conda.sh"
 conda activate "${CONDA_ENV}"
