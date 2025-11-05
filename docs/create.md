@@ -16,6 +16,8 @@ CONTENTS
       - [EPICS Area Detector data files](#epics-area-detector-data-files)
       - [local data files](#local-data-files)
   - [Run the server](#run-the-server)
+    - [systemd service](#systemd-service)
+    - [Management shell script and screen process](#management-shell-script-and-screen-process)
   - [Enable auto (re)start](#enable-auto-restart)
   - [Clients](#clients)
 
@@ -221,7 +223,25 @@ the SQLite file on a local filesystem for the tiled server.
 
 ## Run the server
 
-A bash shell script is available to run your tiled server.  Take note of two important environment variables:
+There are two ways to run the tiled server for routine use:
+
+- (preferred) systemd service
+- (legacy) screen process using management scripts
+
+It is also possible to run the tiled server from the command line (for
+diagnostic purposes).
+
+### systemd service
+
+The [`tiled.service`](tiled.service) file is provided to run the tiled server as
+a systemd service in user space (so it does not require `sudo` or sysadmin
+privileges to run).  See the file for details.  It need to be installed into the
+correct directory and the user account must have "linger" enabled by a sysAdmin.
+
+### Management shell script and screen process
+
+A bash shell script is available to run your tiled server.  Take note of two
+important environment variables:
 
 - `HOST`: What client IP numbers will this server respond to?  If `0.0.0.0`, the
   server will respond to clients from any IP number.  If `127.0.0.1`, the server

@@ -1,0 +1,66 @@
+# systemd --user unit for running "tiled serve" inside a conda env (no sudo required)
+#
+# Save this file as:
+#   ~/.config/systemd/user/tiled.service
+#
+# How to use (no sudo required):
+# 1) Reload user units:
+#      systemctl --user daemon-reload
+# 2) Start the service now:
+#      systemctl --user start tiled.service
+# 3) Enable it to start automatically when you log in:
+#      systemctl --user enable tiled.service
+# 4) Check status and logs:
+#      systemctl --user status tiled.service
+#      journalctl --user -u tiled.service -f
+# 5) Stop / disable:
+#      systemctl --user stop tiled.service
+#      systemctl --user disable tiled.service
+#
+# Important notes and caveats:
+# - This is a per-user service. You do NOT need sudo to install or run it.
+# - systemd user services run while your user session is active. By default they do
+#   NOT continue running after you log out. To allow the service to keep running
+#   after logout ("linger"), an administrator must run:
+#       sudo loginctl enable-linger <your-username>
+# - Conda: systemd user environment is minimal.
+#     - Source conda's activation script and activate the env (more robust).
+
+[Unit]
+Description=Tiled server (conda env: tiled) for user jemian
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+
+WorkingDirectory=//home/beams/JEMIAN/Documents/projects/BCDA-APS/tiled-template
+
+# Additional environment variables:
+Environment=ALLOWED_HOST=otz.xray.aps.anl.gov
+Environment=CONDA_BASE=/APSshare/miniconda/x86_64
+Environment=PATH=/APSshare/miniconda/x86_64/bin:/usr/local/bin:/usr/bin:/bin
+
+# --- Prefer not to use conda run -n tiled ...
+# Use a hostname guard so it only runs on one workstation.
+ExecStart=/bin/bash -lc 'if [ "$(hostname -f)" != "${ALLOWED_HOST}" ]; then exit 0; fi; \
+  source "${CONDA_BASE}/etc/profile.d/conda.sh"; \
+  conda activate tiled; \
+  exec tiled serve config ./config.yml'
+
+# Other services might use these settings.
+# ExecStop=
+# ExecReload=
+
+# Restart on failure (tweak as needed)
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+# Start when the user session's default target is reached
+WantedBy=default.target
