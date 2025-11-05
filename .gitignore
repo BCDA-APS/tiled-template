@@ -153,3 +153,4 @@ config.yml
 *.pid
 
 .nfs*
+.loglogin
