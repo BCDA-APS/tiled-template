@@ -1,38 +1,10 @@
 name: tiled
 
-# conda env create --force -n tiled -f environment.yml --solver=libmamba
-# conda activate tiled
+# See rebuild/README.md for new instructions
 
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 
 dependencies:
   - python >=3.8,<3.12
-  - area-detector-handlers
-  - hdf5plugin
-
-  # dependencies not automatically installed by 'pip install tiled' below
-  - bson
-  - event-model
-  - pymongo
-
-  # additional dependencies of the file directory support additions
-  - h5py
-  - hdf5plugin
-  - punx
-  - pysumreg
-  - spec2nexus
-  - suitcase-jsonl
-  - suitcase-mongo
-  - suitcase-msgpack
-
-  # rely on pip to install tiled and its dependencies
-  - pip  # _install_ pip
-  - pip:  # _use_ pip to install these packages
-    - databroker >=2.0.0b12
-    - tiled[all] >=0.1.0a104
-
-    # additional dependencies of the file directory support additions
-    # install from GitHub repository
-    - https://raw.githubusercontent.com/EPICS-synApps/support/master/utils/mdaPythonUtils/mdalib-2022.post9-py2.py3-none-any.whl

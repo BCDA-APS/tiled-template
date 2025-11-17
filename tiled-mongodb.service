@@ -1,0 +1,68 @@
+# systemd --user unit for running "tiled serve" inside a conda env (no sudo required)
+#
+# Save this file as:
+#   ~/.config/systemd/user/tiled-mongodb.service
+#
+# How to use (no sudo required):
+#
+#  ========     =============================================
+#  action       command
+#  ========     =============================================
+#  reload       systemctl --user daemon-reload
+#  ---          ---
+#  disable      systemctl --user disable tiled-mongodb.service
+#  enable       systemctl --user enable tiled-mongodb.service
+#  logs         journalctl --user -u tiled-mongodb.service -f
+#  restart      systemctl --user restart tiled-mongodb.service
+#  start        systemctl --user start tiled-mongodb.service
+#  status       systemctl --user status tiled-mongodb.service
+#  stop         systemctl --user stop tiled-mongodb.service
+#  ========     =============================================
+#
+# Important notes and caveats:
+# - This is a per-user service. You do NOT need sudo to install or run it.
+# - systemd user services run while your user session is active. By default they do
+#   NOT continue running after you log out. To allow the service to keep running
+#   after logout ("linger"), an administrator must run:
+#       sudo loginctl enable-linger <your-username>
+# - Conda: systemd user environment is minimal.
+#     - Source conda's activation script and activate the env (more robust).
+
+[Unit]
+Description=Tiled+MongoDB server
+After=network.target
+Wants=network.target
+# ConditionHost=192.168.144.94
+
+
+[Service]
+Type=simple
+
+WorkingDirectory=/home/prjemian/Documents/projects/BCDA-APS/tiled-template
+
+# Additional environment variables:
+Environment=CONDA_BASE=/opt/miniconda3
+Environment=PATH=/opt/miniconda3/bin:/usr/local/bin:/usr/bin:/bin
+Environment=CONFIG=./config-2025-11.yml
+Environment=CONDA_OPTS="run -n tiled-mongodb --live-stream"
+Environment=TILED_OPTS="serve config ${CONFIG} --public"
+
+# --- Prefer not to use conda run -n tiled ...
+# Use a hostname guard so it only runs on one workstation.
+ExecStart = /bin/bash -lc '/opt/miniconda3/bin/conda ${CONDA_OPTS} tiled ${TILED_OPTS}'
+
+# Other services might use these settings.
+# ExecStop=
+# ExecReload=
+# Restart on failure (tweak as needed)
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+# Start when the user session's default target is reached
+WantedBy=default.target
